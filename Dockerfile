@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copier les fichiers nécessaires dans l'image Docker
 COPY train.py train.py
+COPY validate.py validate.py
 COPY app.py app.py
 COPY data/customer_churn.csv data/customer_churn.csv
 COPY tests tests
