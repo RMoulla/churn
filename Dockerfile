@@ -23,5 +23,7 @@ RUN python train.py
 # Exposer le port utilisé par Flask
 EXPOSE 5012
 
+ENV PYTHONPATH=/app
+
 # Commande pour démarrer l'application Flask
 CMD ["python", "app.py"]
