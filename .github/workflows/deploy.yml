@@ -38,7 +38,7 @@ jobs:
 
     - name: Create Elastic Beanstalk environment
       run: |
-        eb create churn-env --region us-east-1 --platform docker
+        eb create churn-env2 --region us-east-1 --platform docker
 
     - name: Deploy to Elastic Beanstalk
       run: |
