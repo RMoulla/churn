@@ -1,7 +1,7 @@
 import os
 import joblib
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LinearRegression
 
 def test_train_model_file_exists():
     """Vérifie que le fichier churn_model_clean.pkl est créé après exécution de train.py"""
