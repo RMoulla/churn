@@ -18,9 +18,6 @@ COPY data data
 COPY tests tests
 COPY templates/ templates/
 
-# Exécuter le script pour entraîner le modèle et générer churn_model_clean.pkl
-RUN python train.py
-
 # Exposer le port utilisé par Flask
 EXPOSE 5012
 
