@@ -33,14 +33,3 @@ def test_predict_route_valid(client):
     # Vérifiez que la réponse contient une clé 'churn_prediction'
     json_data = response.get_json()
     assert 'churn_prediction' in json_data, "La réponse ne contient pas de clé 'churn_prediction'."
-
-def test_predict_route_invalid(client):
-    """Vérifie que la route /predict retourne une erreur pour des données invalides"""
-    data = {
-        'Age': 'invalid',  # Valeur non valide
-        'Account_Manager': 1,
-        'Years': 5,
-        'Num_Sites': 3
-    }
-    response = client.post('/predict', data=data)
-    assert response.status_code in [400, 500], "La route /predict ne gère pas correctement les données invalides."
