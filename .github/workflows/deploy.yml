@@ -25,7 +25,7 @@ jobs:
     - name: Train the model
       run: |
         python train.py
-        mv data/churn_model.pkl data/  # Déplacer le modèle dans un dossier accessible
+        mv data/churn_model_clean.pkl data/  
 
     - name: Build Docker image for Elastic Beanstalk
       run: |
