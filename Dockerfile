@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY train.py train.py
 COPY validate.py validate.py
 COPY app.py app.py
-COPY data/customer_churn.csv data/customer_churn.csv
+COPY data data
 COPY tests tests
 COPY templates/ templates/
 
