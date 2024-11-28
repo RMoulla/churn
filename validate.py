@@ -3,7 +3,7 @@ from sklearn.metrics import recall_score, precision_score, f1_score
 import joblib
 
 # Charger les données de validation
-data = pd.read_csv('data/validation_data.csv')
+data = pd.read_csv('data/test_data.csv')
 X_val = data[['Age', 'Account_Manager', 'Years', 'Num_Sites']]
 y_val = data['Churn']
 
