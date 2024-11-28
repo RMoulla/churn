@@ -40,7 +40,7 @@ jobs:
 
     - name: Run Tests in Docker
       run: |
-        docker run churn-app pytest --pythonpath=/app
+        docker run churn-app pytest
 
     - name: Initialize Elastic Beanstalk Application
       run: |
