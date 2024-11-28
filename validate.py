@@ -8,7 +8,7 @@ X_val = data[['Age', 'Account_Manager', 'Years', 'Num_Sites']]
 y_val = data['Churn']
 
 # Charger le modèle
-model = joblib.load('models/churn_model_clean.pkl')
+model = joblib.load('data/churn_model_clean.pkl')
 
 # Prédire sur les données de validation
 predictions = model.predict(X_val)
