@@ -1,4 +1,4 @@
-name: CI/CD with Training and Deployment
+name: CI/CD for Churn Prediction
 
 on:
   push:
@@ -6,37 +6,18 @@ on:
       - main
 
 jobs:
-  train_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Cloner le code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Configurer Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.8'
 
-    # 3. Installer les dépendances
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-
-    # 4. Entraîner le modèle
-    - name: Train the model
-      run: |
-        python train.py
-
-
-    # 6. Construire l'image Docker pour Elastic Beanstalk
-    - name: Build Docker image for Elastic Beanstalk
-      run: |
-        docker build -t churn-app .
-
-    # 7. Installer l'outil Elastic Beanstalk CLI
     - name: Install AWS Elastic Beanstalk CLI
       run: |
         sudo apt-get update
@@ -44,7 +25,6 @@ jobs:
         pip3 install awsebcli --upgrade --user
         export PATH=$PATH:$HOME/.local/bin
 
-    # 8. Configurer les credentials AWS
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
@@ -52,12 +32,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    # 9. Initialiser Elastic Beanstalk
     - name: Initialize Elastic Beanstalk Application
       run: |
-        eb init -p docker churn-app --region us-east-1 --interactive
+        eb init -p docker churn-app --region us-east-1
 
-    # 10. Déployer l'application sur Elastic Beanstalk
     - name: Deploy to Elastic Beanstalk
       run: |
         eb deploy churn-env
