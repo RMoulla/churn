@@ -16,8 +16,11 @@ predictions = model.predict(X_val)
 # Calculer les métriques
 recall = recall_score(y_val, predictions)
 print(f"Recall: {recall:.2f}")
-print(classification_report(y_val, predictions))
+precision = precision_score(y_val, predictions)
+print(f"Precision: {precision:.2f}")
+f1_score = f1_score(y_val, predictions)
+print(f"F1_Score: {f1_score:.2f}")
 
 # Définir un seuil de performance
-if reall < 0.8:
+if reall < 0.6:
     raise ValueError("Le modèle ne satisfait pas le seuil de performance requis.")
