@@ -20,7 +20,7 @@ jobs:
 
     - name: Train the model
       run: |
-        python train.p
+        python train.py
         
     - name: Install AWS Elastic Beanstalk CLI
       run: |
