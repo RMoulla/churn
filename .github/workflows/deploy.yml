@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - train.py
 
 jobs:
   deploy:
@@ -31,6 +33,14 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
+
+    - name: Build Docker Image
+      run: |
+        docker build -t churn-app .
+
+    - name: Run Tests in Docker
+      run: |
+        docker run churn-app pytest
 
     - name: Initialize Elastic Beanstalk Application
       run: |
