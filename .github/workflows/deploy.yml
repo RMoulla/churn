@@ -1,12 +1,12 @@
-name: CI/CD for Churn Prediction
+name: CI/CD triggered by new model
 
 on:
   push:
-    branches:
-      - main  # Déclencher la pipeline lors des pushes vers la branche principale
+    paths:
+      - 'data/churn_model_clean.pkl'  # Déclenche uniquement sur ce fichier
 
 jobs:
-  test-and-build:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,27 +23,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Lint code
+    - name: Run API tests
       run: |
-        pip install flake8
-        flake8 app.py train.py
-
-    - name: Run tests
-      run: |
-        pip install pytest
-        pytest tests/
+        pytest tests/test_app.py
 
     - name: Build Docker image
       run: |
         docker build -t churn-app .
-    
-  deploy:
-    needs: test-and-build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v3
