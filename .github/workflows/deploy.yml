@@ -34,7 +34,7 @@ jobs:
 
     - name: Initialize Elastic Beanstalk Application
       run: |
-        eb init -p docker churn-app --region us-east-1
+        eb init -p docker churn-app2 --region us-east-1
 
     - name: Create Elastic Beanstalk environment
       run: |
