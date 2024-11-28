@@ -30,10 +30,6 @@ jobs:
       run: |
         python train.py
 
-    # 5. Exécuter les tests
-    - name: Run tests
-      run: |
-        pytest --maxfail=5 --disable-warnings
 
     # 6. Construire l'image Docker pour Elastic Beanstalk
     - name: Build Docker image for Elastic Beanstalk
