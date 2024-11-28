@@ -22,5 +22,5 @@ f1_score = f1_score(y_val, predictions)
 print(f"F1_Score: {f1_score:.2f}")
 
 # Définir un seuil de performance
-if reall < 0.6:
+if recall < 0.6:
     raise ValueError("Le modèle ne satisfait pas le seuil de performance requis.")
