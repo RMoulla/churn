@@ -18,6 +18,10 @@ jobs:
       with:
         python-version: '3.8'
 
+    - name: Train the model
+      run: |
+        python train.p
+        
     - name: Install AWS Elastic Beanstalk CLI
       run: |
         sudo apt-get update
