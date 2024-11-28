@@ -1,4 +1,4 @@
-name: CI/CD with Model Versioning
+name: CI/CD with Training and Deployment
 
 on:
   push:
@@ -25,14 +25,11 @@ jobs:
     - name: Train the model
       run: |
         python train.py
+        mv models/churn_model_*.pkl data/  # Déplacer le modèle dans un dossier accessible
 
-    - name: Save trained model to GitHub
+    - name: Build Docker image for Elastic Beanstalk
       run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add models/
-        git commit -m "Add new model version [skip ci]"
-        git push origin main
+        docker build -t churn-app .
 
     - name: Install AWS Elastic Beanstalk CLI
       run: |
@@ -41,13 +38,7 @@ jobs:
         pip3 install awsebcli --upgrade --user
         export PATH=$PATH:$HOME/.local/bin
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-
     - name: Deploy to Elastic Beanstalk
       run: |
+        eb init -p docker churn-app --region us-east-1
         eb deploy churn-env
