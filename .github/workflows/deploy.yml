@@ -1,12 +1,12 @@
-name: CI/CD triggered by train.py update
+name: CI/CD for Churn Prediction
 
 on:
   push:
-    paths:
-      - 'train.py'  # Déclenche uniquement sur ce fichier
+    branches:
+      - main  # Déclencher le workflow sur des pushes vers la branche main
 
 jobs:
-  train-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,17 +23,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Train the model
+    - name: Install AWS Elastic Beanstalk CLI
       run: |
-        python train.py  # Réexécute train.py pour entraîner le modèle
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install awsebcli --upgrade --user
+        export PATH=$PATH:$HOME/.local/bin
 
-    - name: Verify model output
+    - name: Check EB CLI version
       run: |
-        test -f data/churn_model_clean.pkl  # Vérifie que le modèle est bien généré
-
-    - name: Build Docker image
-      run: |
-        docker build -t churn-app .
+        eb --version
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v3
@@ -42,7 +41,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Deploy to Elastic Beanstalk
+    - name: Initialize Elastic Beanstalk Application
       run: |
         eb init -p docker churn-app --region us-east-1
+
+    - name: Deploy to Elastic Beanstalk
+      run: |
         eb deploy churn-env
