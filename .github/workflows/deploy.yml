@@ -1,4 +1,4 @@
-name: CI/CD for Churn Prediction
+name: CI/CD with Model Versioning
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  train_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,6 +17,22 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Train the model
+      run: |
+        python train.py
+
+    - name: Save trained model to GitHub
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add models/
+        git commit -m "Add new model version [skip ci]"
+        git push origin main
 
     - name: Install AWS Elastic Beanstalk CLI
       run: |
@@ -31,10 +47,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-
-    - name: Initialize Elastic Beanstalk Application
-      run: |
-        eb init -p docker churn-app --region us-east-1
 
     - name: Deploy to Elastic Beanstalk
       run: |
