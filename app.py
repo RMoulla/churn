@@ -8,6 +8,9 @@ model = joblib.load('data/churn_model_clean.pkl')
 # Initialiser l'application Flask
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Application is running", 200
 # Définir la route principale pour la prédiction
 @app.route('/predict', methods=['POST'])
 def predict():
