@@ -35,8 +35,7 @@ jobs:
     - name: Initialize Elastic Beanstalk Application
       run: |
         eb init -p docker churn-app --region us-east-1
-        eb setenv S3_BUCKET_NAME=elasticbeanstalk-tp-churn-<unique-id>
 
     - name: Deploy to Elastic Beanstalk
       run: |
-        eb deploy churn-env2
+        eb deploy churn-env
