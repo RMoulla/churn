@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 import joblib 
 
 # Charger les données                          
@@ -13,7 +13,7 @@ X = data[['Age', 'Account_Manager', 'Years', 'Num_Sites']]
 y = data['Churn']
 
 # Créer et entraîner le modèle de régression logistique
-model = LogisticRegression()
+model = RandomForestClassifier()
 
 # Entraîner le modèle sur les données
 model.fit(X, y)
