@@ -14,10 +14,10 @@ model = joblib.load('models/churn_model_clean.pkl')
 predictions = model.predict(X_val)
 
 # Calculer les métriques
-accuracy = accuracy_score(y_val, predictions)
-print(f"Accuracy: {accuracy:.2f}")
+recall = recall_score(y_val, predictions)
+print(f"Recall: {recall:.2f}")
 print(classification_report(y_val, predictions))
 
 # Définir un seuil de performance
-if accuracy < 0.8:
+if reall < 0.8:
     raise ValueError("Le modèle ne satisfait pas le seuil de performance requis.")
