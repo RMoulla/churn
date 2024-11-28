@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY train.py train.py
 COPY app.py app.py
 COPY data/customer_churn.csv data/customer_churn.csv
+COPY tests tests
 COPY templates/ templates/
 
 # Exécuter le script pour entraîner le modèle et générer churn_model_clean.pkl
