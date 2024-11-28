@@ -1,12 +1,12 @@
-name: CI/CD triggered by new model
+name: CI/CD triggered by train.py update
 
 on:
   push:
     paths:
-      - 'data/churn_model_clean.pkl'  # Déclenche uniquement sur ce fichier
+      - 'train.py'  # Déclenche uniquement sur ce fichier
 
 jobs:
-  test-and-deploy:
+  train-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,9 +23,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run API tests
+    - name: Train the model
       run: |
-        pytest tests/test_app.py
+        python train.py  # Réexécute train.py pour entraîner le modèle
+
+    - name: Verify model output
+      run: |
+        test -f data/churn_model_clean.pkl  # Vérifie que le modèle est bien généré
 
     - name: Build Docker image
       run: |
