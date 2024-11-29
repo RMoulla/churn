@@ -38,10 +38,6 @@ jobs:
       run: |
         docker build -t churn-app .
 
-    - name: Train the model in Docker
-      run: |
-        docker run churn-app python train.py
-
     - name: Validate the model in Docker
       run: |
         docker run churn-app python validate.py
