@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 import joblib  
 
 # Charger les données                                 
-data = pd.read_csv('data/train_data.csv')     
+data = pd.read_csv('data/train_data.csv')      
 
 
 X = data[['Age', 'Account_Manager', 'Years', 'Num_Sites']] 
