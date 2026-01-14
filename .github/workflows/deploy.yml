@@ -36,19 +36,19 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t churn-app .
+        docker build -t churn-redha .
 
     - name: Validate the model in Docker
       run: |
-        docker run churn-app python validate.py
+        docker run churn-redha python validate.py
       
     - name: Run Tests in Docker
       run: |
-        docker run churn-app pytest -v
+        docker run churn-redha pytest -v
 
     - name: Initialize Elastic Beanstalk Application
       run: |
-        eb init -p docker churn-app --region eu-west-1
+        eb init -p docker churn-redha --region eu-west-1
 
     - name: Deploy to Elastic Beanstalk
       run: |
