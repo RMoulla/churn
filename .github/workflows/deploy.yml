@@ -52,4 +52,4 @@ jobs:
 
     - name: Deploy to Elastic Beanstalk
       run: |
-        eb deploy Churn-env
+        eb deploy Churn-redha-env
