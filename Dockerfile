@@ -22,7 +22,7 @@ COPY templates/ templates/
 EXPOSE 5000
 
 # Exécuter le script pour entraîner le modèle et générer churn_model_clean.pkl
-# RUN python train.py
+RUN python train.py
 
 ENV PYTHONPATH=/app
 
